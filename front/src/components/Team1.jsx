@@ -16,7 +16,7 @@ class Team1 extends Component {
                 teamName: 'oblachnyi_atlas',
                 time: Date.now()
             }
-            axios.post('http://localhost:8080/index.php/api/team_start_time', body)
+            axios.post('https://retroback2019.azurewebsites.net/service/index.php/api/team_start_time', body)
                 .then(res => {
                     console.log(res.data);
                 })
@@ -24,7 +24,7 @@ class Team1 extends Component {
                     console.log(error);
                 });
         }
-        axios.post('http://localhost:8080/index.php/api/get_total_points', {teamName: 'oblachnyi_atlas'})
+        axios.post('https://retroback2019.azurewebsites.net/service/index.php/api/get_total_points', {teamName: 'oblachnyi_atlas'})
             .then(res => {
                 this.setState({
                     stage: +this.props.history.location.hash.substring(1),
@@ -42,7 +42,7 @@ class Team1 extends Component {
             stage = stage - 6;
         };
         if (stage !== 1) {
-            axios.post('http://localhost:8080/index.php/api/get_total_points', {teamName: 'oblachnyi_atlas'})
+            axios.post('https://retroback2019.azurewebsites.net/service/index.php/api/get_total_points', {teamName: 'oblachnyi_atlas'})
                 .then(res => {
                     this.setState({
                         stage: stage,

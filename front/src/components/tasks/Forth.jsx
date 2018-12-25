@@ -9,8 +9,9 @@ const Forth = (props) => {
                 But first, let me take a selfie
             </h1>
             <div className="Description">
-                <b>Надо придумать описание </b> промониторим соцсети. может что-то интересное найдем
+                В его фотоблоге есть фотографии мест где он бывал. Надо их посетить.
             </div>
+            <p><i>Максимум 100</i></p>
             <Form
                 answers={answers}
                 maxlength="20"

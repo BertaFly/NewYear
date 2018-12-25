@@ -5,17 +5,18 @@ import axios from 'axios';
 class Team3 extends Component {
     state = {
         stage: 3,
-        team: 'kletki,svyazan'
+        team: 'kletki_svyazany',
+        totalPoints: 0
     }
 
     componentDidMount(){
         if (localStorage.getItem('team') === null) {
-            localStorage.setItem('team', 'kletki,svyazan');
+            localStorage.setItem('team', 'kletki_svyazany');
             const body = {
-                teamName: 'kletki,svyazan',
+                teamName: 'kletki_svyazany',
                 time: Date.now()
             }
-            axios.post('http://localhost:8080/index.php/api/team_start_time', body)
+            axios.post('https://retroback2019.azurewebsites.net/service/index.php/api/team_start_time', body)
                 .then(res => {
                     console.log(res.data);
                 })
@@ -23,9 +24,16 @@ class Team3 extends Component {
                     console.log(error);
                 });
         }
-        this.setState({
-            stage: +this.props.history.location.hash.substring(1)
-        })
+        axios.post('https://retroback2019.azurewebsites.net/service/index.php/api/get_total_points', {teamName: 'kletki_svyazany'})
+            .then(res => {
+                this.setState({
+                    stage: +this.props.history.location.hash.substring(1),
+                    totalPoints: res.data
+                })
+            })
+            .catch(error => {
+                console.log(error);
+            });
     }
 
     changeStep = () => {
@@ -34,19 +42,26 @@ class Team3 extends Component {
             stage = stage - 6;
         };
         if (stage !== 5) {
-            this.setState({
-                stage: stage
-            });
-            const path = 'kletki,svyazan#' + stage;
-            this.props.history.push(path);
+            axios.post('https://retroback2019.azurewebsites.net/service/index.php/api/get_total_points', {teamName: 'kletki_svyazany'})
+                .then(res => {
+                    this.setState({
+                        stage: stage,
+                        totalPoints: res.data
+                    });
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+            const path = 'kletki_svyazany#' + stage;
+            this.props.history.push(path)
         } else {
-            this.props.history.push('final');
+            this.props.history.push('final', {team: 'kletki_svyazany'});
         }
     }
 
-    shouldComponentUpdate(nextProps) {
+    shouldComponentUpdate(nextProps, nextState) {
         const newStage = +nextProps.history.location.hash.substring(1);
-        if (newStage !== this.state.stage) {
+        if (newStage !== this.state.stage || nextState.totalPoints !== this.state.totalPoints) {
             this.setState({
                 stage: newStage
             });
@@ -58,6 +73,10 @@ class Team3 extends Component {
     render(){
         return (
             <div>
+                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                    <p style={{margin: 0}}><i>Клетки? Связаны</i></p>
+                    <p style={{margin: 0}}><b>Очки: </b>{this.state.totalPoints}</p>
+                </div>
                 <Task
                     history={this.props.history}
                     number={this.state.stage}

@@ -20,7 +20,7 @@ class Form extends Component {
             teamName: this.props.team,
             task: task
         }
-        axios.post('http://localhost:8080/index.php/api/has_solved', body)
+        axios.post('https://retroback2019.azurewebsites.net/service/index.php/api/has_solved', body)
             .then(res => {
                 if (this.mount && task !== 5) {
                     this.setState({
@@ -33,7 +33,7 @@ class Form extends Component {
             });
         if (task === 5) {
             body.start = Date.now();
-            axios.post('http://localhost:8080/index.php/api/five_start', body)
+            axios.post('https://retroback2019.azurewebsites.net/service/index.php/api/five_start', body)
                 .then(res => {
                     console.log(res.data);
                 })
@@ -68,13 +68,6 @@ class Form extends Component {
 
     submitHandler = (event) => {
         event.preventDefault();
-        /* for API request
-        Send: team name, number task, answers (to validate), attempt number (depends points multiplication)
-        Get: ok/ko, earned points, total points
-        const team = this.props.team;
-        const taskNbr = +this.props.history.location.hash.substring(1);
-        const attempt = this.state.attempt;
-        */
         const task = +this.props.history.location.hash.substring(1);
         if (task === 1) {
             const body = {
@@ -84,7 +77,7 @@ class Form extends Component {
                 answers: this.state.answers,
                 try: this.state.attempt
             }
-            axios.post('http://localhost:8080/index.php/api/first_task', body)
+            axios.post('https://retroback2019.azurewebsites.net/service/index.php/api/first_task', body)
                 .then(res => {
                     console.log(res.data);
                     const nextAttempt = this.state.attempt + 1;
@@ -107,7 +100,7 @@ class Form extends Component {
                 answers: this.state.answers,
                 try: this.state.attempt
             }
-            axios.post('http://localhost:8080/index.php/api/second_task', body)
+            axios.post('https://retroback2019.azurewebsites.net/service/index.php/api/second_task', body)
                 .then(res => {
                     console.log(res.data);
                     const nextAttempt = this.state.attempt + 1;
@@ -130,7 +123,7 @@ class Form extends Component {
                 answers: this.state.answers,
                 try: this.state.attempt
             }
-            axios.post('http://localhost:8080/index.php/api/third_task', body)
+            axios.post('https://retroback2019.azurewebsites.net/service/index.php/api/third_task', body)
                 .then(res => {
                     console.log(res.data);
                     const nextAttempt = this.state.attempt + 1;
@@ -153,7 +146,7 @@ class Form extends Component {
                 answers: this.state.answers,
                 try: this.state.attempt
             }
-            axios.post('http://localhost:8080/index.php/api/forth_task', body)
+            axios.post('https://retroback2019.azurewebsites.net/service/index.php/api/forth_task', body)
                 .then(res => {
                     console.log(res.data);
                     const nextAttempt = this.state.attempt + 1;
@@ -176,7 +169,7 @@ class Form extends Component {
                 answers: this.state.answers,
                 try: this.state.attempt
             }
-            axios.post('http://localhost:8080/index.php/api/five_validate', body)
+            axios.post('https://retroback2019.azurewebsites.net/service/index.php/api/five_validate', body)
                 .then(res => {
                     const nextAttempt = this.state.attempt + 1;
                     if (this.mount) {
@@ -198,7 +191,7 @@ class Form extends Component {
                 answers: this.state.answers,
                 try: this.state.attempt
             }
-            axios.post('http://localhost:8080/index.php/api/sixth_task', body)
+            axios.post('https://retroback2019.azurewebsites.net/service/index.php/api/sixth_task', body)
                 .then(res => {
                     const nextAttempt = this.state.attempt + 1;
                     console.log(res.data)

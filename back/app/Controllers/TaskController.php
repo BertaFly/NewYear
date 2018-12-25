@@ -272,7 +272,7 @@ class TaskController extends Controller
 			case 'spyce_i_chervi':
 				$strToMatch = 'arrakis';
 				break;
-			case 'kletki,svyazan':
+			case 'kletki_svyazany':
 				$strToMatch = 'nexus';
 				break;
 			case 'prizraki_v_dospehah':
@@ -332,12 +332,18 @@ class TaskController extends Controller
 		$endTime = $request->getParam('time');
 		$db = new Model;
 		$db = $db->connect();
-		$sql = $db->update(array('end_time' => $endTime))->table('general')->where('team_name', '=', $teamName);
-		$exec = $sql->execute();
-		$getPoints = $db->select()->from('general')->where('team_name', '=', $teamName);
-		$stmt = $getPoints->execute();
-		$data = $stmt->fetch;
+		$test = $db->select()->from('general')->where('team_name', '=', $teamName);
+		$stmt = $test->execute();
+		$data = $stmt->fetch();
+		$time = 0;
+		if ($data['end_time'] === NULL) {
+			$sql = $db->update(array('end_time' => $endTime))->table('general')->where('team_name', '=', $teamName);
+			$exec = $sql->execute();
+			$time = floor(($endTime - $data['start_time']) / 1000);
+		} else {
+			$time = floor(($data['end_time'] - $data['start_time']) / 1000);
+		}
 		$this->sendMail('ishtar929@gmail.com', "Команда " . $teamName . "прошла, стартанула: " . $data['start_time'] . ", окончила: " . $data['end_time'] . ", с результатом: " . $data['total_point'], "Finish " . $teamName);
-		return json_encode(true);
+		return json_encode(array('total' => $data['total_points'], 'time' => $time, 'res' => $data));
 	}	
 }

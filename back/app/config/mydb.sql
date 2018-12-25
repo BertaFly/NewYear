@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost:3306
--- Время создания: Дек 22 2018 г., 07:20
+-- Время создания: Дек 25 2018 г., 08:26
 -- Версия сервера: 5.7.21
 -- Версия PHP: 7.1.16
 
@@ -56,10 +56,10 @@ CREATE TABLE `general` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `kletki,svyazany`
+-- Структура таблицы `kletki_svyazany`
 --
 
-CREATE TABLE `kletki,svyazany` (
+CREATE TABLE `kletki_svyazany` (
   `id` int(11) NOT NULL,
   `task` int(11) NOT NULL,
   `start_time` bigint(15) DEFAULT NULL,
@@ -130,9 +130,9 @@ ALTER TABLE `general`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `kletki,svyazany`
+-- Индексы таблицы `kletki_svyazany`
 --
-ALTER TABLE `kletki,svyazany`
+ALTER TABLE `kletki_svyazany`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -161,37 +161,37 @@ ALTER TABLE `spyce_i_chervi`
 -- AUTO_INCREMENT для таблицы `furioza_i_7maxov`
 --
 ALTER TABLE `furioza_i_7maxov`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `general`
 --
 ALTER TABLE `general`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT для таблицы `kletki,svyazany`
+-- AUTO_INCREMENT для таблицы `kletki_svyazany`
 --
-ALTER TABLE `kletki,svyazany`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `kletki_svyazany`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `oblachnyi_atlas`
 --
 ALTER TABLE `oblachnyi_atlas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `prizraki_v_dospehah`
 --
 ALTER TABLE `prizraki_v_dospehah`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `spyce_i_chervi`
 --
 ALTER TABLE `spyce_i_chervi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

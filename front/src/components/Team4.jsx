@@ -5,7 +5,8 @@ import axios from 'axios';
 class Team4 extends Component {
     state = {
         stage: 4,
-        team: 'prizraki_v_dospehah'
+        team: 'prizraki_v_dospehah',
+        totalPoints: 0
     }
 
     componentDidMount(){
@@ -15,7 +16,7 @@ class Team4 extends Component {
                 teamName: 'prizraki_v_dospehah',
                 time: Date.now()
             }
-            axios.post('http://localhost:8080/index.php/api/team_start_time', body)
+            axios.post('https://retroback2019.azurewebsites.net/service/index.php/api/team_start_time', body)
                 .then(res => {
                     console.log(res.data);
                 })
@@ -23,9 +24,16 @@ class Team4 extends Component {
                     console.log(error);
                 });
         }
-        this.setState({
-            stage: +this.props.history.location.hash.substring(1)
-        })
+        axios.post('https://retroback2019.azurewebsites.net/service/index.php/api/get_total_points', {teamName: 'prizraki_v_dospehah'})
+            .then(res => {
+                this.setState({
+                    stage: +this.props.history.location.hash.substring(1),
+                    totalPoints: res.data
+                })
+            })
+            .catch(error => {
+                console.log(error);
+            });
     }
 
     changeStep = () => {
@@ -34,20 +42,26 @@ class Team4 extends Component {
             stage = stage - 6;
         };
         if (stage !== 2) {
-            this.setState({
-                stage: stage
-            });
+            axios.post('https://retroback2019.azurewebsites.net/service/index.php/api/get_total_points', {teamName: 'prizraki_v_dospehah'})
+                .then(res => {
+                    this.setState({
+                        stage: stage,
+                        totalPoints: res.data
+                    });
+                })
+                .catch(error => {
+                    console.log(error);
+                });
             const path = 'prizraki_v_dospehah#' + stage;
-            this.props.history.push(path);
-        }
-        else {
-            this.props.history.push('final');
+            this.props.history.push(path)
+        } else {
+            this.props.history.push('final', {team: 'prizraki_v_dospehah'});
         }
     }
 
-    shouldComponentUpdate(nextProps) {
+    shouldComponentUpdate(nextProps, nextState) {
         const newStage = +nextProps.history.location.hash.substring(1);
-        if (newStage !== this.state.stage) {
+        if (newStage !== this.state.stage || nextState.totalPoints !== this.state.totalPoints) {
             this.setState({
                 stage: newStage
             });
@@ -59,6 +73,10 @@ class Team4 extends Component {
     render(){
         return (
             <div>
+                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                    <p style={{margin: 0}}><i>Призраки в доспехах</i></p>
+                    <p style={{margin: 0}}><b>Очки: </b>{this.state.totalPoints}</p>
+                </div>
                 <Task
                     history={this.props.history}
                     number={this.state.stage}
