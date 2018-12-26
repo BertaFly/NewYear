@@ -90,7 +90,7 @@ goto :EOF
 :: Build UI
 IF EXIST "%DEPLOYMENT_TARGET%\front\package.json" (
   pushd "%DEPLOYMENT_TARGET%\front"
-  call "npm run-script build"
+  call npm run-script build
   IF !ERRORLEVEL! NEQ 0 goto error
   popd
 )
