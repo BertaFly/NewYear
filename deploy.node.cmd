@@ -56,7 +56,7 @@ goto Deployment
 
 IF DEFINED KUDU_SELECT_NODE_VERSION_CMD (
   :: The following are done only on Windows Azure Websites environment
-  call %KUDU_SELECT_NODE_VERSION_CMD% "%DEPLOYMENT_SOURCE%" "%DEPLOYMENT_TARGET%" "%DEPLOYMENT_TEMP%"
+  call %KUDU_SELECT_NODE_VERSION_CMD% "%DEPLOYMENT_SOURCE%\front" "%DEPLOYMENT_TARGET%" "%DEPLOYMENT_TEMP%"
   IF !ERRORLEVEL! NEQ 0 goto error
 
   IF EXIST "%DEPLOYMENT_TEMP%\__nodeVersion.tmp" (
@@ -90,7 +90,7 @@ echo Handling node.js deployment.
 
 :: 1. KuduSync
 IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
-  call :ExecuteCmd "%KUDU_SYNC_CMD%" -v 50 -f "%DEPLOYMENT_SOURCE%" -t "%DEPLOYMENT_TARGET%" -n "%NEXT_MANIFEST_PATH%" -p "%PREVIOUS_MANIFEST_PATH%" -i ".git;.hg;.deployment;deploy.cmd"
+  call :ExecuteCmd "%KUDU_SYNC_CMD%" -v 50 -f "%DEPLOYMENT_SOURCE%\front" -t "%DEPLOYMENT_TARGET%" -n "%NEXT_MANIFEST_PATH%" -p "%PREVIOUS_MANIFEST_PATH%" -i ".git;.hg;.deployment;deploy.cmd"
   IF !ERRORLEVEL! NEQ 0 goto error
 )
 
@@ -98,6 +98,14 @@ IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
 call :SelectNodeVersion
 
 :: 3. Install npm packages
+IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
+  pushd "%DEPLOYMENT_TARGET%"
+  call :ExecuteCmd !NPM_CMD! install --production
+  IF !ERRORLEVEL! NEQ 0 goto error
+  popd
+)
+
+:: 4. Install npm packages second atempt
 IF EXIST "%DEPLOYMENT_TARGET%\front\package.json" (
   pushd "%DEPLOYMENT_TARGET%\front"
   call :ExecuteCmd !NPM_CMD! install --production
@@ -105,9 +113,9 @@ IF EXIST "%DEPLOYMENT_TARGET%\front\package.json" (
   popd
 )
 
-:: 4. Build react app
+:: 5. Build UI
 IF EXIST "%DEPLOYMENT_TARGET%\front\package.json" (
-  pushd "%DEPLOYMENT_TARGET%\front" 
+  pushd "%DEPLOYMENT_TARGET%\front"
   call :ExecuteCmd !NPM_CMD! run-script build
   IF !ERRORLEVEL! NEQ 0 goto error
   popd
