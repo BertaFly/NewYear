@@ -105,7 +105,7 @@ IF EXIST "%DEPLOYMENT_TARGET%\front\package.json" (
   popd
 )
 
-:: 4. Build reqct app
+:: 4. Build react app
 IF EXIST "%DEPLOYMENT_TARGET%\front\package.json" (
   pushd "%DEPLOYMENT_TARGET%\front" 
   call :ExecuteCmd !NPM_CMD! run-script build
