@@ -28,7 +28,7 @@ class Team5 extends Component {
             .then(res => {
                 this.setState({
                     stage: +this.props.history.location.hash.substring(1),
-                    totalPoints: res.data
+                    totalPoints: res.data ? res.data : 0
                 })
             })
             .catch(error => {
