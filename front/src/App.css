@@ -20,7 +20,7 @@ h1 {
   width: 100%;
 }
 
-  .Form input {
+  /* .Form input {
     display: inline-block;
     box-sizing: border-box;
     padding: 5px;
@@ -39,7 +39,7 @@ h1 {
 
     .Form input + label {
       float: left;
-    }
+    } */
 
   .Form button {
     border-radius: 3px;
