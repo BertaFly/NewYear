@@ -20,14 +20,14 @@ h1 {
   width: 100%;
 }
 
-  /* .Form input {
+  .Form input {
     display: inline-block;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     padding: 5px;
     margin-bottom: 10px; 
     width: 95%;
-    border-radius: 3px;
+    /* border-radius: 3px;
     -webkit-box-shadow: inset 0 0 3px;
             box-shadow: inset 0 0 3px;
     border: none;
@@ -35,7 +35,7 @@ h1 {
     transition: -webkit-box-shadow 0.2s;
     -o-transition: box-shadow 0.2s;
     transition: box-shadow 0.2s;
-    transition: box-shadow 0.2s, -webkit-box-shadow 0.2s;
+    transition: box-shadow 0.2s, -webkit-box-shadow 0.2s; */
   }
 
     .Form input:focus {
@@ -46,7 +46,7 @@ h1 {
 
     .Form input + label {
       float: left;
-    } */
+    }
 
   .Form button {
     border-radius: 3px;
