@@ -230,9 +230,9 @@ class TaskController extends Controller
 			$stmt = $sql->execute();
 			$getTaskTime = $stmt->fetch();
 			$totalTime = $end - $getTaskTime['start_time'];
-			if ($totalTime <= 120000) {
+			if ($totalTime <= 210000) {
 				$points = 100;
-			} else if (120000 < $totalTime && $totalTime < 180000) {
+			} else if (210000 < $totalTime && $totalTime < 270000) {
 				$points = 80;
 			} else {
 				$points = 60;
